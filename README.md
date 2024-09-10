@@ -101,3 +101,21 @@ function add_maker(a) {
 ```
 이 모든 구현은 순수 함수이기에 가능한 구현 방식
 
+---
+## filter - 거르기 함수
+* 인자로 들어온 컬렉션 사이즈보다 반환되는 컬렉션 사이즈가 같거나 작다.
+
+```javascript
+function _filter(list, predi) {
+	// 반드시 새로운 컬렉션으로 반환한다.
+    const result = [];
+
+    for (let i = 0; i < list.length; i++) {
+        if (predi(list[i])) {
+            result.push(list[i]);
+        }
+    }
+
+    return result;
+}
+```
