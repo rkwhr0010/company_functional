@@ -119,3 +119,17 @@ function _filter(list, predi) {
     return result;
 }
 ```
+## map - 변환하기 함수
+* 인자로 들어온 컬렉션 사이즈와 반환되는 컬렉션 사이즈 같다.
+
+```javascript
+function _map(list, mapper) {
+    const result = [];
+
+    for (let i = 0; i < list.length; i++) {
+        result.push(mapper(list[i]));
+    }
+
+    return result;
+}
+```

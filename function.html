@@ -23,21 +23,6 @@ var users = [
 
 <script>
 
-const SIDE_EFFECT = Math.random;
-
-function add(a, b) {
-    return a + b + SIDE_EFFECT(0);
-}
-
-function merge(obj1, obj2) {
-    return {
-        obj1 : obj1. val ,
-        obj2 : obj2. val ,
-    };
-}
-console.log(merge({val : 10}, {val : 20}))
-
-
 function _filter(list, predi) {
     const result = [];
 
@@ -50,6 +35,15 @@ function _filter(list, predi) {
     return result;
 }
 
+function _map(list, mapper) {
+    const result = [];
+
+    for (let i = 0; i < list.length; i++) {
+        result.push(mapper(list[i]));
+    }
+
+    return result;
+}
 
 
 </script>
