@@ -133,3 +133,13 @@ function _map(list, mapper) {
     return result;
 }
 ```
+## each - 반복 함수
+* 인자로 들어온 컬렉션 사이즈만큼, 인자 함수를 실행해주는 함수
+
+```javascript
+function _each(list, fn) {
+    for (let i = 0; i < list.length; i++) {
+        fn(list[i]);
+    }
+}
+```

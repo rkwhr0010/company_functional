@@ -45,6 +45,11 @@ function _map(list, mapper) {
     return result;
 }
 
+function _each(list, fn) {
+    for (let i = 0; i < list.length; i++) {
+        fn(list[i]);
+    }
+}
 
 </script>
 
