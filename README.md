@@ -143,3 +143,40 @@ function _each(list, fn) {
     }
 }
 ```
+
+## 메서드와 함수 차이 및 filter, map, each 구현 의의
+* 메서드는 클래스에 종속된 행동
+* 함수는 단독으로 존재하는 행동
+```javascript
+// 차이 고민해보기
+const predi = n => n % 2 === 0;
+const mapper = n => n * 2;
+const identity = n => n;
+
+// Array 메서드
+const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arr_filter = data.filter(predi);  // [2, 4, 6, 8, 10]
+const arr_map = data.map(mapper);  // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+data.forEach(identity);
+// 함수 
+const fn_filter = _filter(data, predi);
+const fn_map = _map(data, mapper);
+_each(data, identity);
+```
+#### 핵심 차이점
+데이터(배열)가 먼저오고 뒤에 메서드가 존재한다. (타입에 의존적)
+`data.filter(predi);`
+데이터 존재 전에 함수가 존재한다.
+`_filter(data, predi);`
+
+메서드는 그 클래스가 아니면 해당 메서드를 사용할 수 없다.
+하지만 자바스크립트 경우 ArrayLike 같은 객체들이 존재하는데 이 경우 Array API를 사용하지 못한다. 분명 돌림직한 데이터지만 Array가 아니기 때문이다.
+
+`document.querySelectorAll("*").map(n => n);`
+![NodList](./image/NodeList.png)
+
+우리가 만든 함수는 정상 동작한다.
+![NodList](./image/NodeList_map.png)
+구현한 함수는 인자로 받은 객체에 length가 존재하며 index:value 쌍으로 데이터가 존재하면 정상동작
+
+바꿔 말하면, 구현한 함수가 Array API 보다 더 추상화 수준이 높아 `다형성`이 높다고 할 수 있습니다.
