@@ -26,11 +26,11 @@ var users = [
 function _filter(list, predi) {
     const result = [];
 
-    for (let i = 0; i < list.length; i++) {
-        if (predi(list[i])) {
-            result.push(list[i]);
+    _each(list, val => {
+        if (predi(val)) {
+            result.push(val);
         }
-    }
+    });
 
     return result;
 }
@@ -38,9 +38,9 @@ function _filter(list, predi) {
 function _map(list, mapper) {
     const result = [];
 
-    for (let i = 0; i < list.length; i++) {
-        result.push(mapper(list[i]));
-    }
+    _each(list, val => {
+        result.push(mapper(val));
+    })
 
     return result;
 }
@@ -50,8 +50,15 @@ function _each(list, fn) {
         fn(list[i]);
     }
 }
-console.log([1,2,3,4,5,6,7,8,9,10].filter(n => n % 2 === 0))
+// 돌림직한 배열 유사체
+var a = _filter(document.all, t => t);
+console.log(a);
+var b = _map(a, node => node.nodeName);
+console.log(b);
+
 </script>
+
+
 
 <body>
     

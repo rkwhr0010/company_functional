@@ -180,3 +180,38 @@ _each(data, identity);
 구현한 함수는 인자로 받은 객체에 length가 존재하며 index:value 쌍으로 데이터가 존재하면 정상동작
 
 바꿔 말하면, 구현한 함수가 Array API 보다 더 추상화 수준이 높아 `다형성`이 높다고 할 수 있습니다.
+
+## each 적용
+```javascript
+function _filter(list, predi) {
+    const result = [];
+
+    _each(list, val => {
+        if (predi(val)) {
+            result.push(val);
+        }
+    });
+
+    return result;
+}
+
+function _map(list, mapper) {
+    const result = [];
+
+    _each(list, val => {
+        result.push(mapper(val));
+    })
+
+    return result;
+}
+```
+### 테스트 코드
+```javascript
+// 돌림직한 배열 유사체
+var a = _filter(document.all, t => t);
+console.log(a);
+var b = _map(a, node => node.nodeName);
+console.log(b);
+```
+
+
