@@ -72,7 +72,31 @@ console.log(빼기_함수(50)(20));
 const 빼기_20_함수 = 빼기_함수(20);
 console.log(빼기_20_함수(50));
 
+// 단순히 b, a 인자 순서만 변경함.
+function _curryr(fn) {
+    return function(a) {
+        return function(b) {
+            return fn(b, a); // fn(a, b) 아님!
+        }
+    }
+}
 
+console.clear();
+
+// 예시
+function sub(lt, rt) {
+    return lt - rt;
+}
+// curryr 적용
+const _sub = _curryr(sub);
+console.log(_sub);
+
+const _sub_20 = _sub(20);
+console.log(_sub_20);
+
+console.log(
+    _sub_20(50)
+);
 
 </script>
 
