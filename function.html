@@ -55,6 +55,24 @@ var a = _filter(document.all, t => t);
 console.log(a);
 var b = _map(a, node => node.nodeName);
 console.log(b);
+console.clear();
+
+function _curry(fn) {
+    return function(a) {
+        return function(b) {
+            return fn(a, b);
+        }
+    }
+}
+
+const 빼기_함수 = _curry((lt, rt) => lt - rt);
+console.log(빼기_함수(50)(20));
+
+
+const 빼기_20_함수 = 빼기_함수(20);
+console.log(빼기_20_함수(50));
+
+
 
 </script>
 
