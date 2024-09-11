@@ -279,3 +279,41 @@ console.log(
 );
 ```
 ![curryr_3](./image/curryr_3.png)
+### 개선하기
+* 커링이 적용된 함수를 지금은 순차적으로 실행하지만 `fn(a, b)` 이렇게 한 번에 호출하는 기능 추가
+* 화살표 함수를 적용해서 간결하게 만들어 표현력 높이기
+```javascript
+function _curry(fn) {
+    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(a, b);
+}
+function _curryr(fn) {
+    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(b, a);
+}
+```
+### 퀴즈
+```javascript
+console.log(
+    _curry(sub)(50, 20),
+    _curryr(sub)(50, 20),
+    _curry(sub)(50)(20),
+    _curryr(sub)(50)(20)
+);
+```
+<br><br><br><br><br><br><br><br>
+왜? 동작은 제대로 안 할까요? 이 부분은 프론트엔드 팀에서 답변을 바랍니다.
+<br><br><br><br><br><br><br><br>
+
+#### 수정
+```javascript
+function _curry(fn) {
+    return function (a, b) {
+        return arguments.length === 2 ? fn(a, b) : b => fn(a, b);
+    }
+}
+function _curryr(fn) {
+    return function (a, b) {
+        return arguments.length === 2 ? fn(a, b) : b => fn(b, a);
+    }
+}
+```
+이유는 화살표 함수는 argments 객체를 지원하지 않기 때문입니다.

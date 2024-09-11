@@ -98,6 +98,36 @@ console.log(
     _sub_20(50)
 );
 
+
+function _curry(fn) {
+    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(a, b);
+}
+function _curryr(fn) {
+    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(b, a);
+}
+
+function _curry(fn) {
+    return function (a, b) {
+        return arguments.length === 2 ? fn(a, b) : b => fn(a, b);
+    }
+}
+function _curryr(fn) {
+    return function (a, b) {
+        return arguments.length === 2 ? fn(a, b) : b => fn(b, a);
+    }
+}
+
+console.log(
+    _curry(sub)(50, 20),
+    _curryr(sub)(50, 20),
+    _curry(sub)(50)(20),
+    _curryr(sub)(50)(20)
+);
+
+
+
+
+
 </script>
 
 
