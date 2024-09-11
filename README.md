@@ -300,7 +300,7 @@ console.log(
 );
 ```
 <br><br><br><br><br><br><br><br>
-왜? 동작은 제대로 안 할까요? 이 부분은 프론트엔드 팀에서 답변을 바랍니다.
+왜? 동작은 제대로 안 할까요?
 <br><br><br><br><br><br><br><br>
 
 #### 수정
@@ -317,3 +317,35 @@ function _curryr(fn) {
 }
 ```
 이유는 화살표 함수는 argments 객체를 지원하지 않기 때문입니다.
+
+## get - 꺼내기 함수
+안전하게 값 가져오기
+
+```javascript
+function _get(obj, key) {
+    // === 아닌 이유는 obj 가 undefined 경우 유연하게 처리하기 위함
+    return obj == null ? undefined : obj[key];
+}
+
+// 테스트
+console.log(_get(users[20], "name"));
+try {
+    console.log(users[20].name);
+} catch (error) {
+    console.log(error);    
+}
+// 사용
+console.log(
+    _map(users, user => user.name),
+    _map(users, user => _get(user, "name"))
+);
+
+// 커링 적용 후 먼저 인자를 전달해 실행 시점을 조정하면 더 간결
+var getName = _curryr(_get)("name");
+
+console.log(
+    _map(users, getName)
+);
+
+```
+

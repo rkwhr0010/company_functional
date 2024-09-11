@@ -125,7 +125,29 @@ console.log(
 );
 
 
+function _get(obj, key) {
+    return obj == null ? undefined : obj[key];
+}
 
+console.clear();
+console.log(_get(users[20], "name"));
+try {
+    console.log(users[20].name);
+} catch (error) {
+    console.log(error);    
+}
+
+console.log(
+    _map(users, user => user.name),
+    _map(users, user => _get(user, "name"))
+);
+
+var getName = _curryr(_get)("name");
+
+
+console.log(
+    _map(users, getName)
+);
 
 
 </script>
