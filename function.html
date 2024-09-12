@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<script src="./js/myLib.js"></script>
 <script>
 var users = [
   { id: 1, name: "ID", age: 12 },
@@ -23,47 +24,12 @@ var users = [
 
 <script>
 
-function _filter(list, predi) {
-    const result = [];
-
-    _each(list, val => {
-        if (predi(val)) {
-            result.push(val);
-        }
-    });
-
-    return result;
-}
-
-function _map(list, mapper) {
-    const result = [];
-
-    _each(list, val => {
-        result.push(mapper(val));
-    })
-
-    return result;
-}
-
-function _each(list, fn) {
-    for (let i = 0; i < list.length; i++) {
-        fn(list[i]);
-    }
-}
 // 돌림직한 배열 유사체
 var a = _filter(document.all, t => t);
 console.log(a);
 var b = _map(a, node => node.nodeName);
 console.log(b);
-console.clear();
 
-function _curry(fn) {
-    return function(a) {
-        return function(b) {
-            return fn(a, b);
-        }
-    }
-}
 
 const 빼기_함수 = _curry((lt, rt) => lt - rt);
 console.log(빼기_함수(50)(20));
@@ -72,16 +38,7 @@ console.log(빼기_함수(50)(20));
 const 빼기_20_함수 = 빼기_함수(20);
 console.log(빼기_20_함수(50));
 
-// 단순히 b, a 인자 순서만 변경함.
-function _curryr(fn) {
-    return function(a) {
-        return function(b) {
-            return fn(b, a); // fn(a, b) 아님!
-        }
-    }
-}
 
-console.clear();
 
 // 예시
 function sub(lt, rt) {
@@ -99,24 +56,6 @@ console.log(
 );
 
 
-function _curry(fn) {
-    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(a, b);
-}
-function _curryr(fn) {
-    return (a, b) => arguments.length === 2 ? fn(a, b) : b => fn(b, a);
-}
-
-function _curry(fn) {
-    return function (a, b) {
-        return arguments.length === 2 ? fn(a, b) : b => fn(a, b);
-    }
-}
-function _curryr(fn) {
-    return function (a, b) {
-        return arguments.length === 2 ? fn(a, b) : b => fn(b, a);
-    }
-}
-
 console.log(
     _curry(sub)(50, 20),
     _curryr(sub)(50, 20),
@@ -125,11 +64,8 @@ console.log(
 );
 
 
-function _get(obj, key) {
-    return obj == null ? undefined : obj[key];
-}
 
-console.clear();
+
 console.log(_get(users[20], "name"));
 try {
     console.log(users[20].name);
@@ -149,10 +85,18 @@ console.log(
     _map(users, getName)
 );
 
+console.clear();
+
+console.log(
+    _.map(
+    _.filter(users, user => user.age > 30),
+    _.get("name")
+    )
+);
+
+
 
 </script>
-
-
 
 <body>
     

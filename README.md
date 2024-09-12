@@ -348,4 +348,18 @@ console.log(
 );
 
 ```
+## 코드 정리 및 커링 적용
+함수를 별도 파일로 추출
+![project_structure](./image/project_structure.png)
 
+커링 적용
+```javascript
+const _ = (() => {
+    return {
+        filter : _curryr(_filter),
+        map : _curryr(_map),
+        each : _each,
+        get : _curryr(_get),
+    };
+})();
+```
