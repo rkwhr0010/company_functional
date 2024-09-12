@@ -110,6 +110,21 @@ console.log(
     reduce([], (a, b) => a + b)
 );
 
+console.clear();
+
+pipe(
+    _.filter(user => user.age > 25),
+    _.map(user => user.name),
+    console.log
+)(users);
+
+go(
+    users,
+    _.filter(user => user.age > 25),
+    _.map(user => user.name),
+    console.log
+)
+
 </script>
 
 <body>

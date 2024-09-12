@@ -6,6 +6,8 @@ const _ = (() => {
         each : _each,
         get : _curryr(_get),
         reduce : reduce,
+        go : go,
+        pipe : pipe,
     };
 })();
 
@@ -63,4 +65,18 @@ function reduce(list, iter, memo) {
     });
 
     return memo;
+}
+
+function pipe() {
+    const fns = arguments;
+    return function(val) {
+        return _.reduce(fns, function(val, fn) {
+            return fn(val);
+        }, val);
+    }
+}
+
+function go(val) {
+    const fns = Array.prototype.slice.call(arguments, 1);
+    return pipe.apply(null, fns)(val);
 }

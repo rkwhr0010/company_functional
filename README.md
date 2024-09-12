@@ -405,3 +405,61 @@ console.log(
     reduce([], (a, b) => a + b)
 );
 ```
+
+## pipe, go - 파이프 함수
+
+함수만 인자로 받고, 함수를 리턴하는 reduce 일반화 함수
+
+파이프 의미 `함수(입력 => 출력) => 함수(입력 => 출력) ...`
+콜백 지옥 함수를 보다 좋은 표현력으로 동일한 기능을 수행한다.
+
+```javascript
+function pipe() {
+    const fns = arguments;
+    return function(val) {
+        return _.reduce(fns, function(val, fn) {
+            return fn(val);
+        }, val);
+    }
+}
+```
+
+### 디버깅 해보기
+
+```javascript
+pipe(
+    _.filter(user => user.age > 25),
+    _.map(user => user.name),
+    console.log
+)(users);
+```
+
+`go`는 pipe 함수의 즉시 실행 버전
+
+```javascript
+function go(val) {
+    const fns = Array.prototype.slice.call(arguments, 1);
+    return pipe.apply(null, fns)(val);
+}
+```
+
+#### 퀴즈 - `pipe.apply(null, fns)(val)` 표현력 개선하기
+
+```javascript
+function go(val) {
+    const fns = Array.prototype.slice.call(arguments, 1);
+    return pipe.apply(...fns)(val);
+}
+```
+
+
+### 테스트 코드
+
+```javascript
+go(
+    users,
+    _.filter(user => user.age > 25),
+    _.map(user => user.name),
+    console.log
+)
+```
