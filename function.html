@@ -136,6 +136,26 @@ console.log(gpUsers);
 
 console.log(groupBy(users, user => user.age - user.age % 10));
 
+console.log(_.each(null, t => t));
+
+
+
+
+console.log(_keys(users[0]));
+console.log(_keys([1, 2, 3, 4]));
+console.log(_keys(10));
+console.log(_keys(null));
+
+// console.clear();
+
+_each(users[0], function(value, key){
+    console.log(value, key);
+})
+
+_each([5, ,6, 7], function(value, key){
+    console.log(value, key);
+})
+
 </script>
 
 <body>

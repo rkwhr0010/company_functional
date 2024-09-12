@@ -32,10 +32,21 @@ function _map(list, mapper) {
 
     return result;
 }
+function _is_object(obj) {
+    return typeof obj == 'object' && !!obj;
+}
+
+function _keys(obj) {
+    return _is_object(obj) ? Object.keys(obj) : [];
+}
+
+const _length = _.get("length");
 
 function _each(list, fn) {
-    for (let i = 0; i < list.length; i++) {
-        fn(list[i]);
+    const keys = _keys(list);
+
+    for (let i = 0; i < keys.length; i++) {
+        fn(list[keys[i]], keys[i]);
     }
 }
 

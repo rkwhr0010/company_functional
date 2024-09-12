@@ -4,7 +4,7 @@
 ## 함수형 프로그래밍이란?
 부수 효과(Side Effect)를 미워하고 조합성을 강조하는 프로그래밍 패러다임
 
-### 순수 함수
+## 순수 함수
 동일한 인자 값에 동일한 결과를 항상 반환하는 함수
 부수 효과가 없는 함수
 인자와 반환 값으로만 소통한다
@@ -507,3 +507,50 @@ console.log(groupBy(users, user => user.age - user.age % 10));
 ```
 
 이렇게 작은 함수를 구현하고 함수를 조합하면 변수 선언이 줄어들어 함수가 간결해지고 이는 좋은 표현력으로 나타납니다.
+
+## each 다형성 높이기
+
+`each`함수에 `null` 들어오면 에러가 발생하는 부분 개선
+
+```javascript
+const _length = _.get("length");
+
+function _each(list, fn) {
+    for (let i = 0; i < _length(list); i++) {
+        fn(list[i]);
+    }
+}
+```
+
+`each` 함수가 돌림직한 데이터를 더 순회할 수 있게 다형성 높이기
+
+```javascript
+function _is_object(obj) {
+    return typeof obj == 'object' && !!obj;
+}
+
+function _keys(obj) {
+    return _is_object(obj) ? Object.keys(obj) : [];
+}
+
+function _each(list, fn) {
+    const keys = _keys(list);
+    
+    for (let i = 0; i < keys.length; i++) {
+        fn(list[keys[i]], keys[i]);
+    }
+}
+```
+
+배열의 경우 배열 인덱스에 대한 인덱스가 생겨 정상동작
+객체의 경우 키에 대한 인덱스가 생겨 정상동작
+추가로 입력 받은 보조함수 뒤에 키를 다룰 수 있도록 인자 추가를 했지만 javascript 동작은 유연해 기존 코드에서 예외를 발생시키지 않음
+
+`_each` 조합해서 사용하는 모든 함수가 혜택을 받습니다.
+
+## 마무리
+
+함수형 프로그래밍에서는 예외를 발생시키지 않고 그럴싸한 값을 리턴하면서 프로그래밍이 멈추지 않도록 만듭니다.
+또한 데이터 형을 강하게 확인하지 않고 다형성을 극대화해 프로그래밍합니다. 더불어 함수 구조상 앞에 데이터와 뒤에 보조 함수가 위치하게 되는데 이는 개발자가 앞에 데이터 형을 명확히 알기 때문에 앞에 데이터 형에 구애 받아 강타입으로 체크할 필요가 없습니다.
+
+
