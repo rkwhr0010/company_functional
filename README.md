@@ -363,3 +363,45 @@ const _ = (() => {
     };
 })();
 ```
+
+## reduce - 축약하기 함수
+* 인자로 들어온 컬렉션은 하나의 데이터가 된다.
+
+```javascript
+function reduce(list, iter, memo) {
+    _.each(list, val => {
+        memo = iter(memo, val);
+    });
+
+    return memo;
+}
+console.log(
+    reduce([1,2,3,4,5], (a, b) => a + b, 0)
+);
+```
+
+### 개선
+* memo 인자가 없는 경우 처리
+* 컬렉션 요소가 1 개 이하인 경우 처리
+```javascript
+function reduce(list, iter, memo) {
+    if (arguments.length === 2) {
+        memo = list[0];
+        list = Array.prototype.slice.call(list, 1);
+    }
+    _.each(list, val => {
+        memo = iter(memo, val);
+    });
+
+    return memo;
+}
+console.log(
+    reduce([1,2,3,4,5], (a, b) => a + b)
+);
+console.log(
+    reduce([1], (a, b) => a + b)
+);
+console.log(
+    reduce([], (a, b) => a + b)
+);
+```

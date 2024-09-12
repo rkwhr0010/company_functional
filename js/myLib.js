@@ -5,6 +5,7 @@ const _ = (() => {
         map : _curryr(_map),
         each : _each,
         get : _curryr(_get),
+        reduce : reduce,
     };
 })();
 
@@ -50,4 +51,16 @@ function _curryr(fn) {
 
 function _get(obj, key) {
     return obj == null ? undefined : obj[key];
+}
+
+function reduce(list, iter, memo) {
+    if (arguments.length === 2) {
+        memo = list[0];
+        list = Array.prototype.slice.call(list, 1);
+    }
+    _.each(list, val => {
+        memo = iter(memo, val);
+    });
+
+    return memo;
 }
