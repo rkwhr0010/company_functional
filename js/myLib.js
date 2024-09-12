@@ -80,3 +80,13 @@ function go(val) {
     const fns = Array.prototype.slice.call(arguments, 1);
     return pipe.apply(null, fns)(val);
 }
+
+function push(obj, key, val) {
+    (obj[key] = obj[key] || []).push(val);
+    return obj;
+}
+
+function groupBy(users, keyFn) {
+    return _.reduce(users, (gp, user) => push(gp, keyFn(user), user), {});
+}
+

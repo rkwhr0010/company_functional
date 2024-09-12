@@ -125,6 +125,17 @@ go(
     console.log
 )
 
+var gpUsers = _.reduce(users, function(gp, user) {
+    const gpKey = user.age - user.age % 10;
+    (gp[gpKey] = gp[gpKey] || []).push(user);
+    
+    return gp;
+}, {});
+
+console.log(gpUsers);
+
+console.log(groupBy(users, user => user.age - user.age % 10));
+
 </script>
 
 <body>

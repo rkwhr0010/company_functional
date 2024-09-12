@@ -463,3 +463,47 @@ go(
     console.log
 )
 ```
+
+## 생각보다 강력한 reduce 맛보기 - group by 구현
+```javascript
+var gpUsers = _.reduce(users, function(gp, user) {
+    const gpKey = user.age - user.age % 10;
+    (gp[gpKey] = gp[gpKey] || []).push(user);
+    
+    return gp;
+}, {});
+
+console.log(gpUsers);
+```
+
+### 변경이 발생하는 구분 추상화하기
+
+```javascript
+function groupBy(users, keyFn) {
+    return _.reduce(users, function(gp, user) {
+        const gpKey = keyFn(user);
+        (gp[gpKey] = gp[gpKey] || []).push(user);
+        
+        return gp;
+    }, {});
+}
+
+console.log(groupBy(users, user => user.age - user.age % 10));
+```
+
+### 더욱 더 작은 함수로 쪼개기 - push 구현
+
+```javascript
+function push(obj, key, val) {
+    (obj[key] = obj[key] || []).push(val);
+    return obj;
+}
+
+function groupBy(users, keyFn) {
+    return _.reduce(users, (gp, user) => push(gp, keyFn(user), user), {});
+}
+
+console.log(groupBy(users, user => user.age - user.age % 10));
+```
+
+이렇게 작은 함수를 구현하고 함수를 조합하면 변수 선언이 줄어들어 함수가 간결해지고 이는 좋은 표현력으로 나타납니다.
